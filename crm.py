@@ -6,9 +6,16 @@ from firebase_admin import credentials, auth, firestore
 import pandas as pd
 import plotly.express as px
 
-# Firebase Initialization
-firebase_credentials = json.loads(os.getenv("FIREBASE_CREDENTIALS"))
+# Load Firebase credentials from environment variable
+firebase_credentials = os.getenv("FIREBASE_CREDENTIALS")
 
+# Convert string to dictionary
+if firebase_credentials:
+    firebase_credentials = json.loads(firebase_credentials)
+else:
+    raise ValueError("Firebase credentials not found in environment variables")
+
+# Initialize Firebase Admin
 if not firebase_admin._apps:
     cred = credentials.Certificate(firebase_credentials)
     firebase_admin.initialize_app(cred)

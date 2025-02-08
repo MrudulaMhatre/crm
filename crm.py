@@ -5,11 +5,18 @@ import pandas as pd
 import plotly.express as px
 
 # Firebase Initialization
+firebase_credentials = json.loads(os.getenv("FIREBASE_CREDENTIALS"))
+
 if not firebase_admin._apps:
-    cred = credentials.Certificate("crmmanagement-e3aa6-firebase-adminsdk-fbsvc-9420afb8f0.json")
+    cred = credentials.Certificate(firebase_credentials)
     firebase_admin.initialize_app(cred)
 
+# Connect to Firestore
 db = firestore.client()
+
+
+# Initialize Firebase
+
 
 # -------------------- AUTHENTICATION SYSTEM --------------------
 def register_user(email, password, name):
